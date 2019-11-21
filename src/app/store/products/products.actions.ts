@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { setPrefix } from '../action.helpers';
-import { ProductTable } from './products-table/products-table.models';
+import { ProductTableItem } from './products-table/products-table.models';
 
 export class PRODUCTS {
   public static LOAD = setPrefix('[PRODUCTS] Load');
@@ -15,7 +15,7 @@ export class DetailsLoad implements Action {
 export class DetailsLoadSuccess implements Action {
   readonly type: string = PRODUCTS.LOAD_SUCCESS;
 
-  constructor(public products: ProductTable[]) {
+  constructor(public products: ProductTableItem[]) {
   }
 }
 

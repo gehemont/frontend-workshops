@@ -1,4 +1,4 @@
-export interface ProductTable {
+export interface ProductTableItem {
   productId: string | number;
   tabId: string;
   name: string;

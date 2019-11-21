@@ -6,6 +6,15 @@ import { PRODUCTS_TABLE, ProductsTableActions } from './products-table/products-
 import { productsInitialState, productsReducerMap, ProductsTableState } from './products-table/products-table.reducer';
 import { TABS, TabsActions } from './tabs/tabs.actions';
 import { tabsInitialState, tabsReducerMap, TabsState } from './tabs/tabs.reducer';
+import { ApplicationState } from '../store';
+
+export const initialApplicationState: ApplicationState = {
+  products: {
+    products_table: productsInitialState,
+    filters: filtersInitialState,
+    tabs: tabsInitialState
+  }
+};
 
 const combinedReducer = combineReducers({
     // tslint:disable:max-line-length

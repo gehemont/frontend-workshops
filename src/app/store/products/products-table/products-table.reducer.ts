@@ -15,16 +15,16 @@ import {
   ProductsTableUpdateOne,
   UpdateProductsTableState
 } from './products-table.actions';
-import { ProductTable } from './products-table.models';
+import { ProductTableItem } from './products-table.models';
 
-export interface ProductsTableState extends EntityState<ProductTable> {
+export interface ProductsTableState extends EntityState<ProductTableItem> {
   productsWithMissingPrices?: number;
 }
 
-export const getTabContextProductsKey = (productTable: ProductTable) =>
+export const getTabContextProductsKey = (productTable: ProductTableItem): string =>
   `#${ productTable.tabId }#${ productTable.productId }#${ productTable.tenant.id }`;
 
-const productAdapter = createEntityAdapter<ProductTable>({
+const productAdapter = createEntityAdapter<ProductTableItem>({
   selectId: getTabContextProductsKey
 });
 
@@ -66,22 +66,22 @@ export const getProductsWithMissingPrices = createSelector(getProductsTableState
 export const getCurrentTabProducts = createSelector(
   getAllProducts,
   getCurrentTabId,
-  (products: ProductTable[], currentTabId: string): ProductTable[] => {
-    return (products || []).filter((f: ProductTable) => f.tabId === currentTabId);
+  (products: ProductTableItem[], currentTabId: string): ProductTableItem[] => {
+    return (products || []).filter((f: ProductTableItem) => f.tabId === currentTabId);
   }
 );
 
 export const getProductsByTabName = (tabId: string) => createSelector(
   getAllProducts,
-  (products: ProductTable[]): ProductTable[] => {
-    return (products || []).filter((f: ProductTable) => f.tabId === tabId);
+  (products: ProductTableItem[]): ProductTableItem[] => {
+    return (products || []).filter((f: ProductTableItem) => f.tabId === tabId);
   }
 );
 
 export const getCurrentTabProductsIds = createSelector(
   getCurrentTabProducts,
-  (products: ProductTable[]): string[] => {
-    return products.map((product: ProductTable) => {
+  (products: ProductTableItem[]): string[] => {
+    return products.map((product: ProductTableItem) => {
       return getTabContextProductsKey(product);
     });
   }

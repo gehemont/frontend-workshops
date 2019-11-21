@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { setPrefix } from '../../action.helpers';
-import { ProductTable } from './products-table.models';
+import { ProductTableItem } from './products-table.models';
 import { ProductsTableState } from './products-table.reducer';
 
 // tslint:disable-next-line
@@ -10,14 +10,14 @@ export class PRODUCTS_TABLE {
   static UPDATE_PRODUCTS_TABLE_STATE = setPrefix('[PRODUCTS_TABLE] Update Products Table State');
   static DELETE_ONE = setPrefix('[PRODUCTS_TABLE] Delete One');
   static DELETE_MANY = setPrefix('[PRODUCTS_TABLE] Delete Many');
-  static ADD_ALL = setPrefix('[PRODUCTS_TABLE] Get All');
+  static ADD_ALL = setPrefix('[PRODUCTS_TABLE] Add All');
   static REMOVE_ALL = setPrefix('[PRODUCTS_TABLE] Remove All');
 }
 
 export class ProductsTableAddOne implements Action {
   readonly type = PRODUCTS_TABLE.ADD_ONE;
 
-  constructor(public product: ProductTable) {
+  constructor(public product: ProductTableItem) {
   }
 }
 
@@ -26,7 +26,7 @@ export class ProductsTableUpdateOne implements Action {
 
   constructor(
     public id: string,
-    public changes: Partial<ProductTable>,
+    public changes: Partial<ProductTableItem>,
   ) {
   }
 }
@@ -48,7 +48,7 @@ export class ProductsTableDeleteMany implements Action {
 export class ProductsTableAddAll implements Action {
   readonly type = PRODUCTS_TABLE.ADD_ALL;
 
-  constructor(public products: ProductTable[]) {
+  constructor(public products: ProductTableItem[]) {
   }
 }
 

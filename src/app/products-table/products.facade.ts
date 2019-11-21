@@ -1,25 +1,21 @@
-import {
-  getTabContextProductsKey,
-  PRODUCTS_TABLE,
-  productsInitialState,
-  productsReducerMap,
-  ProductsTableActions,
-  ProductsTableAddAll,
-  ProductsTableState,
-  ProductTableItem
-} from '../..';
-import { createDefaultReducer } from '../../reducers.helpers';
+import { Injectable } from '@angular/core';
+import { ApplicationState, getAllProducts, ProductsTableAddAll, ProductTableItem } from '../store';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-describe('Products Table reducer', () => {
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductsFacade {
 
-  let state: ProductsTableState;
-  const reducer = createDefaultReducer<PRODUCTS_TABLE, ProductsTableState, ProductsTableActions>(productsInitialState, productsReducerMap);
+  products$: Observable<ProductTableItem[]> = this.store.select(getAllProducts);
 
-  let products: ProductTableItem[];
+  constructor(private store: Store<ApplicationState>) {
+    this.loadInitData();
+  }
 
-  beforeEach(() => {
-    state = { ...productsInitialState };
-    products = [
+  loadInitData() {
+    this.store.dispatch(new ProductsTableAddAll([
       {
         productId: 159770,
         tabId: 'customer-set-tab',
@@ -64,13 +60,6 @@ describe('Products Table reducer', () => {
           regionName: undefined
         }
       }
-    ];
-  });
-  it('should add products', () => {
-    const productId = getTabContextProductsKey(products[0]);
-    const action = new ProductsTableAddAll(products);
-    const actual = reducer(state, action);
-    expect(actual.ids[0]).toEqual(productId);
-    expect(actual.entities[productId]).toEqual(products[0]);
-  });
-});
+    ]));
+  }
+}
