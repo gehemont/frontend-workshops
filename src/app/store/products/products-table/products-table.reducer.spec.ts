@@ -6,7 +6,7 @@ import {
   ProductsTableActions,
   ProductsTableAddAll,
   ProductsTableState,
-  ProductTable
+  ProductTableItem
 } from '../..';
 import { createDefaultReducer } from '../../reducers.helpers';
 
@@ -15,7 +15,7 @@ describe('Products Table reducer', () => {
   let state: ProductsTableState;
   const reducer = createDefaultReducer<PRODUCTS_TABLE, ProductsTableState, ProductsTableActions>(productsInitialState, productsReducerMap);
 
-  let products: ProductTable[];
+  let products: ProductTableItem[];
 
   beforeEach(() => {
     state = { ...productsInitialState };
