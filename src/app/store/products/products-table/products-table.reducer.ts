@@ -15,16 +15,16 @@ import {
   ProductsTableUpdateOne,
   UpdateProductsTableState
 } from './products-table.actions';
-import { ProductTableItem } from './products-table.models';
+import { ProductTableItemVM } from './products-table.models';
 
-export interface ProductsTableState extends EntityState<ProductTableItem> {
+export interface ProductsTableState extends EntityState<ProductTableItemVM> {
   productsWithMissingPrices?: number;
 }
 
-export const getTabContextProductsKey = (productTable: ProductTableItem): string =>
+export const getTabContextProductsKey = (productTable: ProductTableItemVM): string =>
   `#${ productTable.tabId }#${ productTable.productId }#${ productTable.tenant.id }`;
 
-const productAdapter = createEntityAdapter<ProductTableItem>({
+const productAdapter = createEntityAdapter<ProductTableItemVM>({
   selectId: getTabContextProductsKey
 });
 
@@ -66,22 +66,22 @@ export const getProductsWithMissingPrices = createSelector(getProductsTableState
 export const getCurrentTabProducts = createSelector(
   getAllProducts,
   getCurrentTabId,
-  (products: ProductTableItem[], currentTabId: string): ProductTableItem[] => {
-    return (products || []).filter((f: ProductTableItem) => f.tabId === currentTabId);
+  (products: ProductTableItemVM[], currentTabId: string): ProductTableItemVM[] => {
+    return (products || []).filter((f: ProductTableItemVM) => f.tabId === currentTabId);
   }
 );
 
 export const getProductsByTabName = (tabId: string) => createSelector(
   getAllProducts,
-  (products: ProductTableItem[]): ProductTableItem[] => {
-    return (products || []).filter((f: ProductTableItem) => f.tabId === tabId);
+  (products: ProductTableItemVM[]): ProductTableItemVM[] => {
+    return (products || []).filter((f: ProductTableItemVM) => f.tabId === tabId);
   }
 );
 
 export const getCurrentTabProductsIds = createSelector(
   getCurrentTabProducts,
-  (products: ProductTableItem[]): string[] => {
-    return products.map((product: ProductTableItem) => {
+  (products: ProductTableItemVM[]): string[] => {
+    return products.map((product: ProductTableItemVM) => {
       return getTabContextProductsKey(product);
     });
   }

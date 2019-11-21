@@ -1,17 +1,61 @@
-import { Injectable } from '@angular/core';
-import { ApplicationState, getAllProducts, ProductsTableAddAll, ProductTableItem } from '../store';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  ApplicationState,
+  getAllProducts,
+  getTabContextProductsKey,
+  ProductsTableAddAll,
+  ProductsTableUpdateOne,
+  ProductTableItemVM
+} from '../store';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsFacade {
+export class ProductsFacade implements OnDestroy {
 
-  products$: Observable<ProductTableItem[]> = this.store.select(getAllProducts);
+  private _updateProduct: Subject<{ id: string, changes: Partial<ProductTableItemVM> }> =
+    new Subject<{ id: string, changes: Partial<ProductTableItemVM> }>();
+
+  private _isDestroyed$: Subject<void> = new Subject<void>();
+
+  products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProducts);
 
   constructor(private store: Store<ApplicationState>) {
+
     this.loadInitData();
+
+    this._updateProduct
+      .pipe(
+        takeUntil(this._isDestroyed$)
+      )
+      .subscribe(({ id, changes }) => {
+        this.store.dispatch(new ProductsTableUpdateOne(id, changes));
+      });
+  }
+
+  toggleEdit(product: ProductTableItemVM) {
+    const id = getTabContextProductsKey(product);
+    const changes: Partial<ProductTableItemVM> = { editing: !product.editing };
+    this._updateProduct.next({ id, changes });
+  }
+
+  saveProduct(product: ProductTableItemVM, changes: Partial<ProductTableItemVM>) {
+    const id = getTabContextProductsKey(product);
+    changes.editing = false;
+
+    this._updateProduct.next({ id, changes });
+  }
+
+  cancelProductUpdate(product: ProductTableItemVM) {
+    const id = getTabContextProductsKey(product);
+    this._updateProduct.next({ id, changes: { editing: false } });
+  }
+
+  ngOnDestroy(): void {
+    this._isDestroyed$.next();
   }
 
   loadInitData() {
@@ -63,3 +107,4 @@ export class ProductsFacade {
     ]));
   }
 }
+

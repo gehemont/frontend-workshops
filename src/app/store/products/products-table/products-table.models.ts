@@ -1,4 +1,4 @@
-export interface ProductTableItem {
+export interface ProductTableItemDTO {
   productId: string | number;
   tabId: string;
   name: string;
@@ -9,6 +9,10 @@ export interface ProductTableItem {
   partNumber: string;
   priceStatus: string;
   price: Price;
+}
+
+export interface ProductTableItemVM extends ProductTableItemDTO {
+  editing?: boolean;
 }
 
 export interface Tenant {

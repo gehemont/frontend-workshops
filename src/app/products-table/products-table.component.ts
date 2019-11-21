@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsFacade } from './products.facade';
-import { getTabContextProductsKey, ProductTableItem } from '../store';
+import { getTabContextProductsKey, ProductTableItemVM } from '../store';
 
 @Component({
   selector: 'app-products-table',
@@ -15,7 +15,7 @@ export class ProductsTableComponent implements OnInit {
   ngOnInit() {
   }
 
-  trackByFn(index: number, product: ProductTableItem): string {
+  trackByFn(index: number, product: ProductTableItemVM): string {
     return getTabContextProductsKey(product);
   }
 
