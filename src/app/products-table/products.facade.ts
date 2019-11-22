@@ -9,7 +9,7 @@ import {
 } from '../store';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,10 @@ export class ProductsFacade implements OnDestroy {
 
   private _isDestroyed$: Subject<void> = new Subject<void>();
 
-  products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProducts);
+  products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProducts)
+    .pipe(
+      map(products => products.map(p => ({ ...p, storeId: getTabContextProductsKey(p) })))
+    );
 
   constructor(private store: Store<ApplicationState>) {
 
@@ -37,21 +40,18 @@ export class ProductsFacade implements OnDestroy {
   }
 
   toggleEdit(product: ProductTableItemVM) {
-    const id = getTabContextProductsKey(product);
     const changes: Partial<ProductTableItemVM> = { editing: !product.editing };
-    this._updateProduct.next({ id, changes });
+    this._updateProduct.next({ id: product.storeId, changes });
   }
 
   saveProduct(product: ProductTableItemVM, changes: Partial<ProductTableItemVM>) {
-    const id = getTabContextProductsKey(product);
     changes.editing = false;
 
-    this._updateProduct.next({ id, changes });
+    this._updateProduct.next({ id: product.storeId, changes });
   }
 
   cancelProductUpdate(product: ProductTableItemVM) {
-    const id = getTabContextProductsKey(product);
-    this._updateProduct.next({ id, changes: { editing: false } });
+    this._updateProduct.next({ id: product.storeId, changes: { editing: false } });
   }
 
   ngOnDestroy(): void {

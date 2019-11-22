@@ -12,6 +12,7 @@ export interface ProductTableItemDTO {
 }
 
 export interface ProductTableItemVM extends ProductTableItemDTO {
+  storeId?: string;
   editing?: boolean;
 }
 
