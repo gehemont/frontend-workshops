@@ -14,3 +14,12 @@ export function createDefaultReducer<ActionTypes, State, Actions extends Action>
 }
 
 export const getEntityById = (id: string) => (state: EntityState<any>) => state.entities[id];
+
+export interface ByIdState<T> {
+  [key: string]: T;
+}
+
+export interface ActionWithPayload<T> extends Action {
+  readonly type: string;
+  payload: T;
+}

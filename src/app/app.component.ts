@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Frontend Workshops @ngrx/entity';
+
+  constructor(private _appService: AppService) {
+
+  }
+
+  addNewProduct() {
+    this._appService.addNewProduct();
+  }
 }

@@ -1,0 +1,25 @@
+<form [formGroup]="productFormGroup">
+  <div class="property">
+    <label>Name</label>
+    <input formControlName="name">
+  </div>
+  <div class="property">
+    <label>Part Number</label>
+    <input formControlName="partNumber">
+  </div>
+  <div formGroupName="price" class="property">
+    <label>Price</label>
+    <input formControlName="value">
+  </div>
+  <div class="actions">
+    <button class="app-button app-button-primary" (click)="emitSave()"
+            [disabled]="productFormGroup.pristine || productFormGroup.invalid || !productFormGroup.touched">
+      <i class="fa fa-save"></i>
+      <span>Save</span>
+    </button>
+    <button class="app-button secondary" (click)="cancelUpdate()">
+      <i class="fa fa-times"></i>
+      <span>Cancel</span>
+    </button>
+  </div>
+</form>
