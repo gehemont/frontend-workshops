@@ -36,7 +36,7 @@ export const productsReducerMapDemo1: ReducerMapType<PRODUCTS_TABLE, ProductTabl
     const index = findIndex(state, (item: ProductTableItemVM) => item.storeId === action.id);
     const product = { ...state[index], ...action.changes };
     const newState = [...state];
-    newState[index] = product;
+    // newState[index] = product;
     return newState;
   },
 };

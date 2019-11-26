@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
-import { Demo3Facade } from './demo/demo3/demo3.facade';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +7,11 @@ import { Demo3Facade } from './demo/demo3/demo3.facade';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = 'Frontend Workshops @ngrx/entity';
 
-  constructor(private _appService: AppService, private _demo3Facade: Demo3Facade) {
-    this._demo3Facade.loadInitData();
+  constructor(public appService: AppService) {
+    this.appService.loadInitData();
   }
 
-  addNewProduct() {
-    this._appService.addNewProduct();
-  }
 }
