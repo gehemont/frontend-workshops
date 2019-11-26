@@ -6,17 +6,17 @@ import { getContextProductsKey } from '../../store/products/demo-3/products-demo
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
 import { Demo3Facade } from '../demo3/demo3.facade';
-import { getAllProductsDemo2 } from '../../store/products/demo-2/products.reducer';
+import { getAllProductsDemo1 } from '../../store/products/demo-1/products.reducer';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Demo2Facade extends Demo3Facade {
+export class Demo1Facade extends Demo3Facade {
 
-  products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo2)
+  products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo1)
     .pipe(
       map(products => products.map(p => ({ ...p, storeId: getContextProductsKey(p) }))),
-      tap(products => console.log('Demo2Facade::products$', products))
+      tap(products => console.log('Demo1Facade::products$', products))
     );
 
   constructor(store: Store<ApplicationState>) {

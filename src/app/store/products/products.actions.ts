@@ -54,7 +54,6 @@ export class ProductsTableRemoveAll implements Action {
   readonly type = PRODUCTS_TABLE.REMOVE_ALL;
 }
 
-
 export type ProductsTableActions
   = ProductsTableAddOne
   | ProductsTableUpdateOne
