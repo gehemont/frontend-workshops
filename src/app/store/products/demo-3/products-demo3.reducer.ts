@@ -19,11 +19,11 @@ export interface ProductsTableStateDemo3 extends EntityState<ProductTableItemVM>
   productsWithMissingPrices?: number;
 }
 
-export const getTabContextProductsKey = (productTable: ProductTableItemVM): string =>
+export const getContextProductsKey = (productTable: ProductTableItemVM): string =>
   `#${ productTable.tabId }#${ productTable.productId }#${ productTable.tenant.id }`;
 
 const productAdapter = createEntityAdapter<ProductTableItemVM>({
-  selectId: getTabContextProductsKey
+  selectId: getContextProductsKey
 });
 
 export const productsInitialStateDemo3: ProductsTableStateDemo3 = productAdapter.getInitialState();
@@ -52,7 +52,7 @@ export const getProductsState = createSelector(selectApplicationState,
     return state.productsDemo3;
   });
 
-export const getAllProducts = createSelector(getProductsState, selectAllProducts);
+export const getAllProductsDemo3 = createSelector(getProductsState, selectAllProducts);
 
 // export const getProductsWithMissingPrices = createSelector(getProductsState,
 //   (state: ProductsTableStateDemo3): number => {
@@ -61,7 +61,7 @@ export const getAllProducts = createSelector(getProductsState, selectAllProducts
 // );
 
 // export const getProductsByTabName = (tabId: string) => createSelector(
-//   getAllProducts,
+//   getAllProductsDemo3,
 //   (products: ProductTableItemVM[]): ProductTableItemVM[] => {
 //     return (products || []).filter((f: ProductTableItemVM) => f.tabId === tabId);
 //   }
@@ -73,7 +73,7 @@ export const getAllProducts = createSelector(getProductsState, selectAllProducts
 //   getCurrentTabProducts,
 //   (products: ProductTableItemVM[]): string[] => {
 //     return products.map((product: ProductTableItemVM) => {
-//       return getTabContextProductsKey(product);
+//       return getContextProductsKey(product);
 //     });
 //   }
 // );

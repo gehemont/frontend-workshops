@@ -13,7 +13,7 @@
   </div>
   <div class="actions">
     <button class="app-button app-button-primary" (click)="emitSave()"
-            [disabled]="productFormGroup.pristine || productFormGroup.invalid || !productFormGroup.touched">
+            [disabled]="productFormGroup.pristine || !productFormGroup.touched">
       <i class="fa fa-save"></i>
       <span>Save</span>
     </button>
