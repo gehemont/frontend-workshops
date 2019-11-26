@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { getAllProductsDemo3, getContextProductsKey } from '../../store/products/demo-3/products-demo3.reducer';
 import { ProductsTableAddAll, ProductsTableUpdateOne } from '../../store/products/products.actions';
 import { ApplicationState } from '../../store';
@@ -21,13 +21,10 @@ export class Demo3Facade implements OnDestroy {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(
-      map(products => products.map(p => ({ ...p, storeId: getContextProductsKey(p) }))),
       tap(prodcuts => console.log('Demo3Facade::products$', prodcuts))
     );
 
   constructor(protected store: Store<ApplicationState>) {
-
-    this.loadInitData();
 
     this._updateProduct
       .pipe(takeUntil(this._isDestroyed$))
@@ -55,7 +52,10 @@ export class Demo3Facade implements OnDestroy {
   }
 
   loadInitData() {
-    this.store.dispatch(new ProductsTableAddAll(productsDataShort));
+    const products = productsDataShort.map((p: ProductTableItemVM) => {
+      return { ...p, storeId: getContextProductsKey(p) };
+    });
+    this.store.dispatch(new ProductsTableAddAll(products));
   }
 }
 

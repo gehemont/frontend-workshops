@@ -13,7 +13,6 @@ import { createSelector } from '@ngrx/store';
 import { selectApplicationState } from '../../root.selectors';
 import { ApplicationState } from '../../store';
 import { values } from 'lodash';
-import { getContextProductsKey } from '../demo-3/products-demo3.reducer';
 
 /* tslint:disable:no-empty-interface */
 export interface ProductsTableStateDemo2 extends ByIdState<ProductTableItemVM> {
@@ -23,11 +22,11 @@ export const productsInitialStateDemo2: ProductsTableStateDemo2 = {};
 
 export const productsReducerMapDemo2: ReducerMapType<PRODUCTS_TABLE, ProductsTableStateDemo2, ProductsTableActions> = {
   [PRODUCTS_TABLE.ADD_ONE]: (state: ProductsTableStateDemo2, action: ProductsTableAddOne) => {
-    return { ...state, [getContextProductsKey(action.product)]: action.product };
+    return { ...state, [action.product.storeId]: action.product };
   },
   [PRODUCTS_TABLE.ADD_ALL]: (state: ProductsTableStateDemo2, action: ProductsTableAddAll) => {
     return action.products.reduce((acc, current: ProductTableItemVM) => {
-      acc[getContextProductsKey(current)] = current;
+      acc[current.storeId] = current;
       return acc;
     }, { ...state });
   },

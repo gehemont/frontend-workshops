@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { setPrefix } from '../action.helpers';
-import { ProductTableItemDTO, ProductTableItemVM } from './products.models';
+import { ProductTableItemVM } from './products.models';
 
 // tslint:disable-next-line
 export class PRODUCTS_TABLE {
@@ -15,7 +15,7 @@ export class PRODUCTS_TABLE {
 export class ProductsTableAddOne implements Action {
   readonly type = PRODUCTS_TABLE.ADD_ONE;
 
-  constructor(public product: ProductTableItemDTO) {
+  constructor(public product: ProductTableItemVM) {
   }
 }
 
@@ -24,7 +24,7 @@ export class ProductsTableUpdateOne implements Action {
 
   constructor(
     public id: string,
-    public changes: Partial<ProductTableItemDTO>,
+    public changes: Partial<ProductTableItemVM>,
   ) {
   }
 }

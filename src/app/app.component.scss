@@ -304,12 +304,15 @@ p {
       &:disabled {
         background-color: darken($background-color, 20%);
       }
-
     }
 
     .app-button-primary {
       background-color: #dd0031;
       color: white;
+    }
+
+    .app-button-selected {
+      background-color: darken(#dd0031, 20%) !important;
     }
 
   }

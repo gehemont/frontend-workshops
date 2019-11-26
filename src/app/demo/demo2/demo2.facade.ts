@@ -15,7 +15,6 @@ export class Demo2Facade extends Demo3Facade {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo2)
     .pipe(
-      map(products => products.map(p => ({ ...p, storeId: getContextProductsKey(p) }))),
       tap(products => console.log('Demo2Facade::products$', products))
     );
 

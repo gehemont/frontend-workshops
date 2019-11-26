@@ -1,4 +1,3 @@
-import { productReducerDemo2 } from './product-value.reducer';
 import {
   PRODUCTS_TABLE,
   ProductsTableActions,
@@ -19,7 +18,7 @@ export type ProductsTableStateDemo1 = ProductTableItemVM[];
 
 export const productsInitialStateDemo1: ProductsTableStateDemo1 = [];
 
-export const productsReducerMapDemo2: ReducerMapType<PRODUCTS_TABLE, ProductTableItemVM[], ProductsTableActions> = {
+export const productsReducerMapDemo1: ReducerMapType<PRODUCTS_TABLE, ProductTableItemVM[], ProductsTableActions> = {
   [PRODUCTS_TABLE.ADD_ONE]: (state: ProductsTableStateDemo1, action: ProductsTableAddOne) => {
     return [...state, action.product];
   },
@@ -29,13 +28,16 @@ export const productsReducerMapDemo2: ReducerMapType<PRODUCTS_TABLE, ProductTabl
   [PRODUCTS_TABLE.DELETE_ONE]: (state: ProductsTableStateDemo1, action: ProductsTableDeleteOne): ProductsTableStateDemo1 => {
     const index = findIndex(state, (item: ProductTableItemVM) => item.storeId === action.id);
     const newState = { ...state };
-    delete newState[action.id];
+    newState.splice(index, 1);
     return newState;
   },
   // tslint:disable-next-line:max-line-length
   [PRODUCTS_TABLE.UPDATE_ONE]: (state: ProductsTableStateDemo1, action: ProductsTableUpdateOne): ProductsTableStateDemo1 => {
-    const tile = state[action.id];
-    return { ...state, [action.id]: productReducerDemo2(tile, action) };
+    const index = findIndex(state, (item: ProductTableItemVM) => item.storeId === action.id);
+    const product = { ...state[index], ...action.changes };
+    const newState = [...state];
+    newState[index] = product;
+    return newState;
   },
 };
 

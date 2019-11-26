@@ -4,6 +4,7 @@ import { productsAll } from './app.data';
 import { ProductsTableAddOne } from './store/products/products.actions';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from './store';
+import { getContextProductsKey } from './store/products/demo-3/products-demo3.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class AppService {
   }
 
   addNewProduct() {
-    const product = this.getNewProduct();
+    const rawProduct = this.getNewProduct();
+    const product = { ...rawProduct, storeId: getContextProductsKey(rawProduct) };
     this.store.dispatch(new ProductsTableAddOne(product));
   }
 }

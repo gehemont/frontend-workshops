@@ -17,9 +17,21 @@
     <span>{{ title }} app is running!</span>
 
     <div class="menu">
-      <button class="app-button app-button-primary" [routerLink]="'demo1'">Demo 1</button>
-      <button class="app-button app-button-primary" [routerLink]="'demo2'">Demo 2</button>
-      <button class="app-button app-button-primary" [routerLink]="'demo3'">Demo 3</button>
+      <button class="app-button app-button-primary"
+              [routerLink]="'demo1'"
+              [routerLinkActive]="'app-button-selected'">
+        Demo 1
+      </button>
+      <button class="app-button app-button-primary"
+              [routerLink]="'demo2'"
+              [routerLinkActive]="'app-button-selected'">
+        Demo 2
+      </button>
+      <button class="app-button app-button-primary"
+              [routerLink]="'demo3'"
+              [routerLinkActive]="'app-button-selected'">
+        Demo 3
+      </button>
     </div>
 
   </div>
