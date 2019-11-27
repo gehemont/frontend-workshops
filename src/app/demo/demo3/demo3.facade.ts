@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
@@ -8,16 +8,13 @@ import { ProductTableItemVM } from '../../store/products/products.models';
 import { DemoSharedService } from '../demo.shared.service';
 import { DemoFacade } from '../demo';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class Demo3Facade implements DemoFacade {
+@Injectable()
+export class Demo3Facade implements DemoFacade, OnDestroy {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(
       tap(products => console.log('Demo3Facade::products$', products)),
-      // stupido-1 - breaking references
-      // map(products => cloneDeep(products))
+      // map(products => cloneDeep(products)) // bug - breaks references
       shareReplay(1)
     );
 
@@ -27,7 +24,7 @@ export class Demo3Facade implements DemoFacade {
     );
 
   constructor(
-    protected store: Store<ApplicationState>,
+    private store: Store<ApplicationState>,
     private _demoSharedService: DemoSharedService
   ) {
   }
@@ -42,6 +39,10 @@ export class Demo3Facade implements DemoFacade {
 
   cancelProductUpdate(product: ProductTableItemVM) {
     this._demoSharedService.cancelProductUpdate(product);
+  }
+
+  ngOnDestroy(): void {
+    console.log('Demo3Facade::ngOnDestroy');
   }
 }
 

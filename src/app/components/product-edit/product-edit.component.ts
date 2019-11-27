@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductTableItemVM } from '../../store/products/products.models';
 
@@ -7,7 +7,7 @@ import { ProductTableItemVM } from '../../store/products/products.models';
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.scss']
 })
-export class ProductEditComponent {
+export class ProductEditComponent implements OnDestroy {
 
   productFormGroup: FormGroup = this._fb.group({
     name: this._fb.control(''),
@@ -35,5 +35,9 @@ export class ProductEditComponent {
   cancelUpdate() {
     this.productFormGroup.reset();
     this.cancelEdit.emit();
+  }
+
+  ngOnDestroy(): void {
+    console.log('ProductEditComponent::ngOnDestroy');
   }
 }
