@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { ProductTableItemVM } from '../../store/products/products.models';
-import { DemoService } from '../../demo/demo.shared.service';
+import { DEMO_FACADE, DemoFacade } from '../../demo/demo.shared.service';
 
 @Component({
   selector: 'app-products-list',
@@ -9,7 +9,7 @@ import { DemoService } from '../../demo/demo.shared.service';
 })
 export class ProductsListComponent {
 
-  constructor(@Inject('ProductsFacade') private productsFacade: DemoService) {
+  constructor(@Inject(DEMO_FACADE) private productsFacade: DemoFacade) {
   }
 
   trackByFn(index: number, product: ProductTableItemVM): string {

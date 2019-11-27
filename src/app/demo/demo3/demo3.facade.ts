@@ -5,12 +5,13 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 import { getAllProductsDemo3 } from '../../store/products/demo-3/products-demo3.reducer';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
-import { DemoService, DemoSharedService } from '../demo.shared.service';
+import { DemoSharedService } from '../demo.shared.service';
+import { DemoFacade } from '../demo';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Demo3Facade implements DemoService {
+export class Demo3Facade implements DemoFacade {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(

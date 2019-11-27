@@ -1,23 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProductTableItemVM } from '../store/products/products.models';
 import { ApplicationState } from '../store';
 import { ProductsTableUpdateOne } from '../store/products/products.actions';
-
-export interface DemoService {
-
-  products$: Observable<ProductTableItemVM[]>;
-
-  productsCount$: Observable<number>;
-
-  toggleEdit(product: ProductTableItemVM);
-
-  saveProduct(product: ProductTableItemVM, changes: Partial<ProductTableItemVM>);
-
-  cancelProductUpdate(product: ProductTableItemVM);
-}
 
 @Injectable({
   providedIn: 'root'

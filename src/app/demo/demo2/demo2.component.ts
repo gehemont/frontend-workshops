@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Demo2Facade } from './demo2.facade';
+import { DEMO_FACADE } from '../demo';
 
 @Component({
   selector: 'app-demo2',
@@ -7,7 +8,7 @@ import { Demo2Facade } from './demo2.facade';
   styleUrls: ['./demo2.component.scss'],
   providers: [
     {
-      provide: 'ProductsFacade',
+      provide: DEMO_FACADE,
       useClass: Demo2Facade
     }]
 })
