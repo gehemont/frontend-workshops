@@ -42,7 +42,7 @@ export const productsReducerMapDemo2: ReducerMapType<PRODUCTS_TABLE, ProductsTab
   },
 };
 
-export const getProductsState = createSelector(selectApplicationState,
+const getProductsState = createSelector(selectApplicationState,
   (state: ApplicationState): ProductsTableStateDemo2 => {
     return state.productsDemo2;
   });

@@ -1,53 +1,43 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { getAllProductsDemo3 } from '../../store/products/demo-3/products-demo3.reducer';
-import { ProductsTableUpdateOne } from '../../store/products/products.actions';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
-
+import { DemoSharedService } from '../demo.shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Demo3Facade implements OnDestroy {
-
-  private _updateProduct: Subject<{ id: string, changes: Partial<ProductTableItemVM> }> =
-    new Subject<{ id: string, changes: Partial<ProductTableItemVM> }>();
-
-  private _isDestroyed$: Subject<void> = new Subject<void>();
+export class Demo3Facade {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(
-      tap(prodcuts => console.log('Demo3Facade::products$', prodcuts))
+      tap(products => console.log('Demo3Facade::products$', products))
     );
 
-  constructor(protected store: Store<ApplicationState>) {
+  productsCount$: Observable<number> = this.products$
+    .pipe(
+      map(products => (products || []).length)
+    );
 
-    this._updateProduct
-      .pipe(takeUntil(this._isDestroyed$))
-      .subscribe(({ id, changes }) => {
-        this.store.dispatch(new ProductsTableUpdateOne(id, changes));
-      });
+  constructor(
+    protected store: Store<ApplicationState>,
+    private _demoSharedService: DemoSharedService
+  ) {
   }
 
   toggleEdit(product: ProductTableItemVM) {
-    const changes: Partial<ProductTableItemVM> = { editing: !product.editing };
-    this._updateProduct.next({ id: product.storeId, changes });
+    this._demoSharedService.toggleEdit(product);
   }
 
   saveProduct(product: ProductTableItemVM, changes: Partial<ProductTableItemVM>) {
-    changes.editing = false;
-    this._updateProduct.next({ id: product.storeId, changes });
+    this._demoSharedService.saveProduct(product, changes);
   }
 
   cancelProductUpdate(product: ProductTableItemVM) {
-    this._updateProduct.next({ id: product.storeId, changes: { editing: false } });
-  }
-
-  ngOnDestroy(): void {
-    this._isDestroyed$.next();
+    this._demoSharedService.cancelProductUpdate(product);
   }
 }
 

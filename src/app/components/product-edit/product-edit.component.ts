@@ -18,6 +18,7 @@ export class ProductEditComponent {
   });
 
   @Input() set product(value: ProductTableItemVM) {
+    this.productFormGroup.reset();
     this.productFormGroup.patchValue(value);
   }
 

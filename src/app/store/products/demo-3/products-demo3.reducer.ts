@@ -47,7 +47,7 @@ export const productsReducerMapDemo3: ReducerMapType<PRODUCTS_TABLE, ProductsTab
 
 const selectAllProducts = productAdapter.getSelectors().selectAll;
 
-export const getProductsState = createSelector(selectApplicationState,
+const getProductsState = createSelector(selectApplicationState,
   (state: ApplicationState): ProductsTableStateDemo3 => {
     return state.productsDemo3;
   });

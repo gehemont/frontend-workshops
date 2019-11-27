@@ -1,33 +1,34 @@
-<div>
-  <div *ngFor="let product of productsFacade.products$ | async; trackBy: trackByFn"
-       class="product"
-  >
-    <div class="header">
-      <b>{{product.name}}</b>
-      <button
-        class="app-button edit-button"
-        [class.active]="product.editing"
-        (click)="productsFacade.toggleEdit(product)"
-      >
-        Toggle Edit
-      </button>
-    </div>
-    <div class="details">
-      Tenant: {{product.tenant.name}}
-    </div>
-    <div class="details">
-      Part number: {{product.partNumber}}
-    </div>
-    <div class="details">
-      Price: {{product.price.value}}
-    </div>
-    <div *ngIf="product.editing">
-      <app-product-edit
-        [product]="product"
-        (productChange)="productsFacade.saveProduct(product, $event)"
-        (cancelEdit)="productsFacade.cancelProductUpdate(product)"
-      >
-      </app-product-edit>
-    </div>
+<div class="count">
+  <b>Count:</b>&nbsp;{{ productsFacade.productsCount$ | async }}
+</div>
+<div *ngFor="let product of productsFacade.products$ | async; trackBy: trackByFn"
+     class="product"
+>
+  <div class="header">
+    <b>{{product.name}}</b>
+    <button
+      class="app-button edit-button"
+      [class.active]="product.editing"
+      (click)="productsFacade.toggleEdit(product)"
+    >
+      Toggle Edit
+    </button>
+  </div>
+  <div class="details">
+    Tenant: {{product.tenant.name}}
+  </div>
+  <div class="details">
+    Part number: {{product.partNumber}}
+  </div>
+  <div class="details">
+    Price: {{product.price.value}}
+  </div>
+  <div *ngIf="product.editing">
+    <app-product-edit
+      [product]="product"
+      (productChange)="productsFacade.saveProduct(product, $event)"
+      (cancelEdit)="productsFacade.cancelProductUpdate(product)"
+    >
+    </app-product-edit>
   </div>
 </div>

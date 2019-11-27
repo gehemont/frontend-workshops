@@ -1,5 +1,10 @@
 $background-color: #f3f3f3;
 
+:host {
+  position: relative;
+  display: block;
+}
+
 *:focus {
   outline: none;
 }
@@ -23,4 +28,10 @@ $background-color: #f3f3f3;
   b {
     font-size: 16px;
   }
+}
+
+.count {
+  position: absolute;
+  right: 0;
+  top: -30px;
 }
