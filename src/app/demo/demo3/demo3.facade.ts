@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { getAllProductsDemo3 } from '../../store/products/demo-3/products-demo3.reducer';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
-import { DemoSharedService } from '../demo.shared.service';
+import { DemoService, DemoSharedService } from '../demo.shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Demo3Facade {
+export class Demo3Facade implements DemoService {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(
-      tap(products => console.log('Demo3Facade::products$', products))
+      tap(products => console.log('Demo3Facade::products$', products)),
+      // stupido-1 - breaking references
+      // map(products => cloneDeep(products))
+      shareReplay(1)
     );
 
   productsCount$: Observable<number> = this.products$

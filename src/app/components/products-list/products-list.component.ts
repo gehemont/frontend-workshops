@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ProductTableItemVM } from '../../store/products/products.models';
 import { DemoService } from '../../demo/demo.shared.service';
 
@@ -9,7 +9,8 @@ import { DemoService } from '../../demo/demo.shared.service';
 })
 export class ProductsListComponent {
 
-  @Input() productsFacade: DemoService;
+  constructor(@Inject('ProductsFacade') private productsFacade: DemoService) {
+  }
 
   trackByFn(index: number, product: ProductTableItemVM): string {
     return product.storeId;

@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
 import { getAllProductsDemo2 } from '../../store/products/demo-2/products.reducer';
-import { DemoSharedService } from '../demo.shared.service';
+import { DemoService, DemoSharedService } from '../demo.shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Demo2Facade {
+export class Demo2Facade implements DemoService {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo2)
     .pipe(
-      tap(products => console.log('Demo2Facade::products$', products))
+      tap(products => console.log('Demo2Facade::products$', products)),
+      // map(products => cloneDeep(products))
+      shareReplay(1)
     );
 
   productsCount$: Observable<number> = this.products$

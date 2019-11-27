@@ -7,7 +7,9 @@ import { ApplicationState } from '../store';
 import { ProductsTableUpdateOne } from '../store/products/products.actions';
 
 export interface DemoService {
+
   products$: Observable<ProductTableItemVM[]>;
+
   productsCount$: Observable<number>;
 
   toggleEdit(product: ProductTableItemVM);
