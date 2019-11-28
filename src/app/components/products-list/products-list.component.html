@@ -1,5 +1,8 @@
 <div class="count">
-  <b>Count:</b>&nbsp;{{ productsFacade.productsCount$ | async }}
+  <button (click)="show = !show">Show/Hide</button>
+  <ng-container *ngIf="show">
+    <b>Count:</b>&nbsp;{{ productsFacade.productsCount$ | async }}
+  </ng-container>
 </div>
 <div *ngFor="let product of productsFacade.products$ | async; trackBy: trackByFn"
      class="product"

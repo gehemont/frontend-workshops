@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map, publishReplay, refCount, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
 import { DemoSharedService } from '../demo.shared.service';
@@ -14,12 +14,12 @@ export class Demo1Facade implements DemoFacade {
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo1)
     .pipe(
       tap(products => console.log('Demo1Facade::products$', products.length)),
-      publishReplay(1),
-      refCount()
+      shareReplay({ bufferSize: 1, refCount: true })
     );
 
   productsCount$: Observable<number> = this.products$
     .pipe(
+      tap(data => console.log('Demo1Facade::productsCount$')),
       filter(products => !!products && products.length > 0),
       map(products => products.length),
     );
@@ -28,6 +28,8 @@ export class Demo1Facade implements DemoFacade {
     private store: Store<ApplicationState>,
     private _demoSharedService: DemoSharedService
   ) {
+
+    this.products$.subscribe(data => console.log(data));
   }
 
   toggleEdit(product: ProductTableItemVM) {
