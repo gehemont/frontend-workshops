@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map, shareReplay, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { getAllProductsDemo3 } from '../../store/products/demo-3/products-demo3.reducer';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
 import { DemoSharedService } from '../demo.shared.service';
 import { DemoFacade } from '../demo';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class Demo3Facade implements DemoFacade {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(
       tap(products => console.log('Demo3Facade::products$', products.length)),
-      shareReplay(1)
+      // shareReplay(1)
     );
 
   productsCount$: Observable<number> = this.products$

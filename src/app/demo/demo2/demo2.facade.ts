@@ -8,15 +8,13 @@ import { getAllProductsDemo2 } from '../../store/products/demo-2/products.reduce
 import { DemoSharedService } from '../demo.shared.service';
 import { DemoFacade } from '../demo';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class Demo2Facade implements DemoFacade {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo2)
     .pipe(
       tap(products => console.log('Demo2Facade::products$', products.length)),
-      shareReplay(1)
+      // shareReplay(1)
     );
 
   productsCount$: Observable<number> = this.products$

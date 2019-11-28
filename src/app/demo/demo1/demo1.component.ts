@@ -7,6 +7,7 @@ import { DEMO_FACADE } from '../demo';
   templateUrl: './demo1.component.html',
   styleUrls: ['./demo1.component.scss'],
   providers: [
+    Demo1Facade,
     {
       provide: DEMO_FACADE,
       useClass: Demo1Facade
