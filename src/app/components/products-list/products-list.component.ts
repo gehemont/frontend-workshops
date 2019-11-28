@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductTableItemVM } from '../../store/products/products.models';
 import { DemoFacade } from '../../demo/demo';
 
@@ -7,7 +7,7 @@ import { DemoFacade } from '../../demo/demo';
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss']
 })
-export class ProductsListComponent implements OnDestroy {
+export class ProductsListComponent {
 
   @Input() productsFacade: DemoFacade;
 
@@ -23,10 +23,6 @@ export class ProductsListComponent implements OnDestroy {
 
   trackByFn(index: number, product: ProductTableItemVM): string {
     return product.storeId;
-  }
-
-  ngOnDestroy(): void {
-    // console.log('ProductsListComponent::ngOnDestroy');
   }
 
 }

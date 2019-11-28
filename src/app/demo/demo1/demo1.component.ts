@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Demo1Facade } from './demo1.facade';
 import { DEMO_FACADE } from '../demo';
 
@@ -12,13 +12,9 @@ import { DEMO_FACADE } from '../demo';
       useClass: Demo1Facade
     }]
 })
-export class Demo1Component implements OnDestroy {
+export class Demo1Component {
 
   constructor(public productsFacade: Demo1Facade) {
 
-  }
-
-  ngOnDestroy(): void {
-    // console.log('Demo1Component::ngOnDestroy');
   }
 }

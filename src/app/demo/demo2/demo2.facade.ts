@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -11,22 +11,19 @@ import { DemoFacade } from '../demo';
 @Injectable({
   providedIn: 'root'
 })
-export class Demo2Facade implements DemoFacade, OnDestroy {
+export class Demo2Facade implements DemoFacade {
 
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo2)
     .pipe(
-      tap(products => console.log('Demo2Facade::products$', products)),
-      // map(products => cloneDeep(products)) // bug - breaks references
+      tap(products => console.log('Demo2Facade::products$', products))
     );
 
-  // productsCount$: Observable<number> = this.products$
-  productsCount$: Observable<number> = this.store.select(getAllProductsDemo2)
+  productsCount$: Observable<number> = this.products$
     .pipe(
       map(products => (products || []).length)
     );
 
   constructor(private store: Store<ApplicationState>, private _demoSharedService: DemoSharedService) {
-    // console.log('Demo2Facade::constructor');
   }
 
   toggleEdit(product: ProductTableItemVM) {
@@ -39,10 +36,6 @@ export class Demo2Facade implements DemoFacade, OnDestroy {
 
   cancelProductUpdate(product: ProductTableItemVM) {
     this._demoSharedService.cancelProductUpdate(product);
-  }
-
-  ngOnDestroy(): void {
-    console.log('Demo2Facade::ngOnDestroy');
   }
 
 }
