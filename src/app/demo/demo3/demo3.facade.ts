@@ -20,6 +20,7 @@ export class Demo3Facade implements DemoFacade, OnDestroy {
     );
 
   productsCount$: Observable<number> = this.store.select(getAllProductsDemo3)
+  // productsCount$: Observable<number> = this.products$
     .pipe(
       map(products => (products || []).length)
     );

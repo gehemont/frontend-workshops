@@ -13,16 +13,13 @@ import { getAllProductsDemo1 } from '../../store/products/demo-1/products.reduce
 })
 export class Demo1Facade implements DemoFacade, OnDestroy {
 
-  // private isDestroyed$: Subject<void> = new Subject<void>();
-
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo1)
     .pipe(
       tap(products => console.log('Demo1Facade::products$', products)),
-      // map(products => cloneDeep(products)) // bug - breaks references
-      // takeUntil(this.isDestroyed$)
     );
 
   productsCount$: Observable<number> = this.store.select(getAllProductsDemo1)
+  // productsCount$: Observable<number> = this.products$
     .pipe(
       map(products => (products || []).length),
       shareReplay(1)

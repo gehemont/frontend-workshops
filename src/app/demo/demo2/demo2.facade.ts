@@ -17,9 +17,9 @@ export class Demo2Facade implements DemoFacade, OnDestroy {
     .pipe(
       tap(products => console.log('Demo2Facade::products$', products)),
       // map(products => cloneDeep(products)) // bug - breaks references
-      // shareReplay(1)
     );
 
+  // productsCount$: Observable<number> = this.products$
   productsCount$: Observable<number> = this.store.select(getAllProductsDemo2)
     .pipe(
       map(products => (products || []).length)
