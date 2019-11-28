@@ -13,7 +13,12 @@ import { DEMO_FACADE } from '../demo';
     }]
 })
 export class Demo3Component implements OnDestroy {
+
+  constructor(public productsFacade: Demo3Facade) {
+
+  }
+
   ngOnDestroy(): void {
-    console.log('Demo3Component::ngOnDestroy');
+    // console.log('Demo3Component::ngOnDestroy');
   }
 }

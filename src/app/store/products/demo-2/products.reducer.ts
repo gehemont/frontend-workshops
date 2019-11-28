@@ -51,3 +51,5 @@ export const getAllProductsDemo2 = createSelector(getProductsState,
   (state: ProductsTableStateDemo2): ProductTableItemVM[] => {
     return values(state);
   });
+
+

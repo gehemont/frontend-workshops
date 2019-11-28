@@ -8,7 +8,9 @@ import { DemoSharedService } from '../demo.shared.service';
 import { DemoFacade } from '../demo';
 import { getAllProductsDemo1 } from '../../store/products/demo-1/products.reducer';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Demo1Facade implements DemoFacade, OnDestroy {
 
   // private isDestroyed$: Subject<void> = new Subject<void>();
@@ -17,11 +19,10 @@ export class Demo1Facade implements DemoFacade, OnDestroy {
     .pipe(
       tap(products => console.log('Demo1Facade::products$', products)),
       // map(products => cloneDeep(products)) // bug - breaks references
-      shareReplay(1),
       // takeUntil(this.isDestroyed$)
     );
 
-  productsCount$: Observable<number> = this.products$
+  productsCount$: Observable<number> = this.store.select(getAllProductsDemo1)
     .pipe(
       map(products => (products || []).length),
       shareReplay(1)
@@ -31,6 +32,7 @@ export class Demo1Facade implements DemoFacade, OnDestroy {
     private store: Store<ApplicationState>,
     private _demoSharedService: DemoSharedService
   ) {
+    // console.log('Demo1Facade::constructor');
   }
 
   toggleEdit(product: ProductTableItemVM) {

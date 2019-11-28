@@ -38,6 +38,6 @@ export class ProductEditComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ProductEditComponent::ngOnDestroy');
+    // console.log('ProductEditComponent::ngOnDestroy');
   }
 }
