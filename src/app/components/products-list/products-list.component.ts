@@ -9,6 +9,7 @@ import { DemoFacade } from '../../demo/demo';
 })
 export class ProductsListComponent {
 
+  // NOTE - this is madness! never do it this way. its just for the DEMO!
   @Input() productsFacade: DemoFacade;
 
   // [1]

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, publishReplay, refCount, tap } from 'rxjs/operators';
 import { getAllProductsDemo3 } from '../../store/products/demo-3/products-demo3.reducer';
 import { ApplicationState } from '../../store';
 import { ProductTableItemVM } from '../../store/products/products.models';
@@ -14,7 +14,8 @@ export class Demo3Facade implements DemoFacade {
   products$: Observable<ProductTableItemVM[]> = this.store.select(getAllProductsDemo3)
     .pipe(
       tap(products => console.log('Demo3Facade::products$', products.length)),
-      // shareReplay(1)
+      publishReplay(1),
+      refCount()
     );
 
   productsCount$: Observable<number> = this.products$
