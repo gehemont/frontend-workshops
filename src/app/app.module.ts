@@ -29,7 +29,7 @@ export const metaReducers: MetaReducer<ApplicationState>[] = !environment.produc
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(rootReducer, { metaReducers }),
-    StoreDevtoolsModule.instrument(),
+    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     ReactiveFormsModule
   ],
   providers: [],
