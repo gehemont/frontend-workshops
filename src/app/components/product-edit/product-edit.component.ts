@@ -18,6 +18,10 @@ export class ProductEditComponent {
   });
 
   @Input() set product(value: ProductTableItemVM) {
+
+    // NOTE - uncomment this to see how ngrx-store-freeze works
+    // value.price.value = 666;
+
     this.productFormGroup.reset();
     this.productFormGroup.patchValue(value);
   }
